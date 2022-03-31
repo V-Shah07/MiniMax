@@ -17,10 +17,10 @@ void userPlay(char* board)
 
 	bool user, comp;
 	int numCalls = 0;
-
+	int numCallsSlow = 0;
 	bool player;
 
-	printf("Do you want to go first: ");
+	printf("Do you want to go first(y for yes and n for no): ");
 	scanf("%c", &choice);
 
 
@@ -38,15 +38,21 @@ void userPlay(char* board)
 
 
 	int pos;
+
 	char winner;
 	for (int i = 0; i < 9;)
 	{
 
 		if (player == user)
 		{
-			printf("What position would you like to place: ");
+			printf("What position would you like to place a letter in: ");
 			scanf("%d", &pos);
 			pos -= 1;
+			if(pos < 0 || pos > 9)
+			{
+				printf("Out of range.\n");
+				continue;;
+			}
 			if (board[pos] != '_')
 			{
 				printf("That is taken.\n");
@@ -56,19 +62,31 @@ void userPlay(char* board)
 		else
 		{
 			pos = determineMoveFast(board, player, &numCalls);
+			determineMoveSlow(board, player, &numCallsSlow);
 		}
 		board[pos] = sym[player];
 
 		printBoard(board);
 		if ((winner = isWin(board)) != 'n')
 		{
-			printf("\n\n%c WINS!!", winner);
+			if(winner == 't')
+			{
+				printf("It is a tie!!\n\n");
+			}
+			else
+			{
+				printf("\n\n%c WINS!!", winner);
+			}
 			break;
 		}
 		player = !player;
 		++i;
 	}
-	printf("The minimax function was called %d times!!", numCalls);
+	printf("\nNumber of recursive iterations in functions for DFS without Alpha-Beta Pruning(ABP) and with ABP:\n");
+	printf("DFS\t\tDFS with ABP\n");
+	printf("%d\t\t%d\n\n", numCallsSlow, numCalls);
+	printf("There were %d times as many recursive function iterations without ABP compared to with ABP!\n", numCallsSlow/numCalls);
+
 }
 char autoPlay(char* board)
 {
@@ -134,7 +152,7 @@ void testing(char* board)
 {
 	int wins = 0, losses = 0, ties = 0;
 	int numGames;
-	printf("How many games: ");
+	printf("How many games do you want to run: ");
 	scanf("%d", &numGames);
 	for (int i = 0; i < numGames; ++i)
 	{
@@ -152,7 +170,7 @@ void testing(char* board)
 		}
 		clearBoard(board);
 	}
-	printf("%d    %d    %d\n", wins, ties, losses);
+	printf("%d\t%d\t%d\n", wins, ties, losses);
 	printf("%lf%% wins, %lf%% ties, %lf%% losses", (double)wins / numGames * 100.0, (double)ties / numGames * 100.0, (double)losses / numGames * 100.0);
 
 }
@@ -163,7 +181,7 @@ int main()
 	char board[9] = {'_', '_', '_', '_', '_', '_','_', '_', '_'};
 
 	char choice;
-	printf("do you want to test?(y or n): ");
+	printf("do you want to run multiple tests or play a game?(y for testing and n for a game): ");
 	choice = getchar();
 	getchar();
 	if (choice == 'y')

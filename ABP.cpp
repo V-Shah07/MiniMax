@@ -12,7 +12,7 @@
 int position2 = 0;
 int calls2 = 0;
 char board2[9];
-int determineMoveReal(int emptyPos, bool player, int* depth, int alpha, int beta)
+int DFS_ABP(int emptyPos, bool player, int* depth, int alpha, int beta)
 {
     ++calls2;
 
@@ -69,7 +69,7 @@ int determineMoveReal(int emptyPos, bool player, int* depth, int alpha, int beta
             }
             board2[i] = sym[player];
 
-            ans = determineMoveReal(emptyPos - 1, !player, depth, alpha, beta);
+            ans = DFS_ABP(emptyPos - 1, !player, depth, alpha, beta);
 
             board2[i] = '_';
 
@@ -117,7 +117,7 @@ int determineMoveFast(char* field, bool player, int* numCalls)
     }
     memcpy(board2, field, strlen(field));
     int depth = 0;
-    determineMoveReal(numEmpty, player, &depth, -1 * INT_MAX, INT_MAX);
+    DFS_ABP(numEmpty, player, &depth, -1 * INT_MAX, INT_MAX);
     *numCalls = calls2;
     return position2;
 

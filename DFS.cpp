@@ -11,7 +11,7 @@
 int position = 0;
 int calls = 0;
 char board[9];
-int determineMoveReal(int emptyPos, bool player, int* depth)
+int DFS(int emptyPos, bool player, int* depth)
 {
     ++calls;
 
@@ -63,7 +63,7 @@ int determineMoveReal(int emptyPos, bool player, int* depth)
         {
             board[i] = sym[player];
 
-            ans = determineMoveReal(emptyPos - 1, !player, depth);
+            ans = DFS(emptyPos - 1, !player, depth);
 
             board[i] = '_';
 
@@ -109,7 +109,7 @@ int determineMoveReal(int emptyPos, bool player, int* depth)
 
 }
 
-int determineMove(char* field, bool player, int* numCalls)
+int determineMoveSlow(char* field, bool player, int* numCalls)
 {
     int numEmpty = 0;
     for (int i = 0; i < 9; ++i)
@@ -121,7 +121,7 @@ int determineMove(char* field, bool player, int* numCalls)
     }
     memcpy(board, field, strlen(field));
     int depth = 0;
-    determineMoveReal(numEmpty, player, &depth);
+    DFS(numEmpty, player, &depth);
     *numCalls = calls;
     return position;
 

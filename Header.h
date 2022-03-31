@@ -2,7 +2,7 @@
 
 void printBoard(char* board);
 
-int determineMove(char*, bool, int*);
+int determineMoveSlow(char*, bool, int*);
 int determineMoveFast(char*, bool, int*);
 char isWin(char* board);
 
