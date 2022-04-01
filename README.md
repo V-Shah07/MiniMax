@@ -8,7 +8,7 @@
 5. In terminal, type: ```./TicTacToe.exe```
 ### Alternatively:
 1. Download the files of this repository by zipping it, and then open that folder through file explorer
-2. If you are on a linux based shell: ```g++ -o TicTacToe ABP.cpp DFS.cpp funcs.cpp main.cpp``` should compile and ```./TicTacToe.exe``` should run it
+2. If you are on a linux based shell: ```g++ -o TicTacToe ABP.cpp DFS.cpp funcs.cpp main.cpp``` should compile and ```./TicTacToe``` should run it
 3. If you are on windows: ```gcc ABP.cpp DFS.cpp funcs.cpp main.cpp -o TicTacToe.exe``` should compile and ```TicTacToe.exe``` should run it
 
 ## How it works:
